@@ -1,0 +1,4 @@
+server/bin
+server/pkg
+server/src/github.com
+server/src/gopkg.in

@@ -1,0 +1,43 @@
+vista "standard" a tre livelli:
+
+-------------------------------------------------------
+     header con titolo app (piccolo)
+-------------------------------------------------------
+            |
+ listafeeds |       lista articoli
+            |
+            | -----------------------------------------
+            |                           |
+            |       contenuto articolo  | storyboard
+            |                           |
+
+da progettare finestra dedicata al contenuto e allo storyboard
+
+url di base:
+
+ <baseurl>/app/theinformer/home
+
+per gli eventuali dettagli:
+
+ <baseurl>/app/theinformer/feeds
+ <baseurl>/app/theinformer/feeds/:fId/articles/
+ <baseurl>/app/theinformer/feeds/:fId/articles/:aId
+
+Per ricerca articoli
+ <baseurl>/app/theinformer/articles?querystring
+
+Per storyboard articolo:
+ <baseurl>/app/theinformer/feeds/:fId/articles/:aId/storyboard
+
+Inizia senza storyboard e con vista unica (/home)!
+
+BACKBONE
+
+   --> views:
+        - FeedView (con visualizzazione titolo feed e tasti di controllo per
+          rimozione, refresh articoli e spostamento)
+        - FeedsView con lista gerarchica di FeedView
+        - ArticleView con visualizzazione titolo, data, autore e tasti di controllo (
+          segna come letto, rimuovi, apri in finestra, ... ? )
+        - ArticlesView con lista elenco di ArticleView
+        - ArticleContentView come da titolo

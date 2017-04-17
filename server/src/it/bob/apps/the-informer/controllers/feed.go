@@ -12,12 +12,12 @@ import (
 
     // External additional libraries
     "gopkg.in/mgo.v2"
-    //"gopkg.in/mgo.v2/bson"
+    "gopkg.in/mgo.v2/bson"
     "github.com/julienschmidt/httprouter"
     "github.com/romana/rlog"
 
     // Application packages
-    "it/bob/apps/feed-parser/models"
+    "it/bob/apps/the-informer/models"
 )
 
 
@@ -49,7 +49,7 @@ func NewFeedController(s *mgo.Session) *FeedController {
 //    ]
 //}
 func (fc FeedController) UpdateFeeds(response http.ResponseWriter, request *http.Request, params httprouter.Params) {
-    var logprefix string = " [ GET /rest/projects ] "
+    var logprefix string = " [ PATCH /rest/projects ] "
     rlog.Info(logprefix + "Request for all projects headers . . . ")
     var feeds []models.RssFeed
     err := fc.session.DB("theinformer").C("feeds").Find( /*bson.M{ }*/ nil)/*.Select( bson.M{ "tasks": 0 } )*//*.Sort("-DateLastUpdated")*/.All(&feeds)
@@ -61,39 +61,47 @@ func (fc FeedController) UpdateFeeds(response http.ResponseWriter, request *http
         fmt.Fprintf(response, "%s",responseMessage)
         return
     }
-
     var responseBody []models.FeedHeader
     for _, feed := range feeds {
-        feed.UpdateFeed(fc.session);
-        /*rlog.Info(logprefix + " |-- Managing feed '" + feed.Title + "' . . .")
-        // Filling feedHeader . . .
-        var feedHeader models.FeedHeader
-        feedHeader.Title = feed.Title
-        feedHeader.Url   = feed.Url
-        feedDatas, err := http.Get( feedHeader.Url )
-        if err != nil {
-    		rlog.Error("Error in calling url: ", err)
-    		return
-    	}
-        var channelData models.RssChannel
-    	bs, err := ioutil.ReadAll(feedDatas.Body)
-    	xml.Unmarshal(bs, &channelData)
-    	for _, article := range channelData.Articles {
-            // check if article.PublishDate > feed.LastUpdated
-    		fmt.Println(logprefix + " |-- article identified: TITLE: " + article.Title + " -- URL: " + article.GUID + ", registering content . . .")
-    		articlePage, err := http.Get( item.GUID )
-    		if ( err != nil ) {
-    			fmt.Println("     --> ERROR getting article: ", err )
-    			continue
-    		}
-            article.Content, err = string( ioutil.ReadAll(articlePage.Body) )
-            article.Rate = 0
-            //article.FeedId = feed.Id
-            fc.session.DB("theinformer").C("articles").Insert( article )*/
-    	}
+        fh, fhErr := feed.UpdateFeed(fc.session);
+        if ( fhErr != nil ) {
+            rlog.Error( "Error on updating feed '" + feed.Title + "'!", err)
+            continue
+        }
+        responseBody = append( responseBody, *fh )
+    }
 
     //    pj, _ := json.Marshal(projects)
     responseMessage, _ := json.Marshal(models.ResponseMessage{HttpCode: 200, Message: "Projects retreived!", Body: responseBody })
+    response.Header().Set("Content-Type", "application/json")
+    response.WriteHeader(200)
+    fmt.Fprintf(response, "%s", responseMessage)
+}
+
+func (fc FeedController) DeleteFeed(response http.ResponseWriter, request *http.Request, params httprouter.Params) {
+    var feedId string = params.ByName("fId")
+    var feed models.RssFeed
+    feed.Id = bson.ObjectIdHex(feedId)
+    feed.DeleteFeed(fc.session)
+}
+
+func (fc FeedController) GetFeeds(response http.ResponseWriter, request *http.Request, params httprouter.Params) {
+    var logprefix string = " [ GET /rest/feeds ] "
+    rlog.Info(logprefix + "Request for all feeds . . . ")
+    var feeds []models.RssFeed
+    err := fc.session.DB("theinformer").C("feeds").Find( nil).All(&feeds)
+    if ( err != nil ) {
+        // TODO: manage the exception!
+        rlog.Error( "Error on retreiving feeds!", err)
+        return
+    }
+    var responseBody []models.RssFeed
+    for _, feed := range feeds {
+        responseBody = append( responseBody, feed )
+    }
+
+    //    pj, _ := json.Marshal(projects)
+    responseMessage, _ := json.Marshal(models.ResponseMessage{HttpCode: 200, Message: "Feeds retreived!", Body: responseBody })
     response.Header().Set("Content-Type", "application/json")
     response.WriteHeader(200)
     fmt.Fprintf(response, "%s", responseMessage)

@@ -1,3 +1,3 @@
 set GOPATH=%cd%
 
-go install it/bob/apps/feed-parser
+go install it/bob/apps/the-informer

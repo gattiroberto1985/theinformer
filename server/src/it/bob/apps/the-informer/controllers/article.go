@@ -15,7 +15,7 @@ import (
     //"github.com/romana/rlog"
 
     // Application packages
-    //"it/bob/apps/feed-parser/models"
+    //"it/bob/apps/the-informer/models"
 )
 
 

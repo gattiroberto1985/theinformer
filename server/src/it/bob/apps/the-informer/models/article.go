@@ -9,6 +9,7 @@ import (
     "github.com/romana/rlog"
     "gopkg.in/mgo.v2/bson"
     "gopkg.in/mgo.v2"
+    "github.com/mauidude/go-readability"
 )
 
 
@@ -30,11 +31,12 @@ type ArticleXML struct {
 
 type Article struct {
     Id          bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
-    FeedId      string        `json:"feedId"      bson:"feedId"     `
+    FeedId      bson.ObjectId `json:"feedId"      bson:"feedId"     `
     Title       string        `json:"title"       bson:"title"      `
     Link        string        `json:"url"         bson:"url"        `
     PublishDate time.Time     `json:"publishDate" bson:"publishDate"`
     Author      string        `json:"author"      bson:"author"     `
+    IsRead      bool          `json:"isRead"      bson:"isRead"`
     //GUID        string        `json:"guid"        bson:"guid"       `
     Description template.HTML `json:"description" bson:"description"`
     Rate        float32       `json:"rate"        bson:"rate"`
@@ -70,8 +72,17 @@ func (article Article) Save(session *mgo.Session) {
         rlog.Error("     --> ERROR getting article: ", err )
         return
     }
+
     body, _ := ioutil.ReadAll(articlePage.Body)
-    article.Content = string ( body )
+    doc, err := readability.NewDocument( string ( body ) )
+    if err != nil {
+        rlog.Error(" Readability error", err)
+    }
+    article.Content = doc.Content()
     article.Rate = 0
-    session.DB("theinformer").C("articles").Insert( article )
+    article.IsRead = false
+    err = session.DB("theinformer").C("articles").Insert( article )
+    if ( err != nil ) {
+        rlog.Error("   --> ", err )
+    }
 }

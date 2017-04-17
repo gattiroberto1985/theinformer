@@ -2,3 +2,5 @@ server/bin
 server/pkg
 server/src/github.com
 server/src/gopkg.in
+server/src/golang.org
+client/node_modules/

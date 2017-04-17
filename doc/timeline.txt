@@ -1,0 +1,4 @@
+**********************************************
+docker build -t the-informer-image .
+
+docker run -it --rm --name the-informer-instance -p 3000:3000 -v /app/the-informer/:/go/src/the-informer -w /go/src/the-informer the-informer-image

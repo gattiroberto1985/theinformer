@@ -1,0 +1,16 @@
+#header {
+    width: 100%;
+}
+
+#sidebar {
+    z-index: 1000;
+    float: left;
+    height: 100%;
+    width: 20%;
+    left: 0;
+}
+
+#content {
+    width: 67%;
+    float: left;
+}

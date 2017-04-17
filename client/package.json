@@ -1,0 +1,16 @@
+{
+  "name": "theinformer-client",
+  "version": "1.0.0",
+  "description": "Client per TheInformer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "roberto gatti",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "jshint": "^2.9.4"
+  }
+}

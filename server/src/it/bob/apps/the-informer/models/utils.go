@@ -9,13 +9,13 @@ import (
 	//"log"
 	//"net/http"
 	//"os"
-	//"time"
+	"time"
 
 	// Terze parti
 	//"github.com/tdewolff/minify"
 	//"github.com/romana/rlog"
 	//"gopkg.in/mgo.v2"
-	//"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/bson"
 
 )
 
@@ -32,8 +32,9 @@ type ResponseMessage struct {
 }
 
 type ArticleHeader struct {
-	Id    string `json:"id"    bson:"id"`
-	Title string `json:"title" bson:"title"`
+	Id    bson.ObjectId `json:"id"    bson:"id"`
+	Title string        `json:"title" bson:"title"`
+	Date  time.Time     `json:"date"  bson:"date"`
 }
 
 type FeedHeader struct {

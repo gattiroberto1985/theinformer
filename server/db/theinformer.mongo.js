@@ -1,5 +1,5 @@
+//var conn = new Mongo("192.168.99.100:32775");
 var conn = new Mongo();
-
 db = conn.getDB("theinformer");
 db.createCollection("feeds");
 db.createCollection("articles");

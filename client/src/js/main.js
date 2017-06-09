@@ -10,11 +10,12 @@ require.config({
     jquery    : 'libs/jquery-3.2.1',
     underscore: 'libs/underscore-1.8.3',
     backbone  : 'libs/backbone-1.3.3',
-    tether    : 'libs/tether-1.4.0',
+    //tether    : 'libs/tether-1.4.0',
     bootstrap : 'libs/bootstrap-3.3.7',
     config    : 'config',
     templates: 'http://localhost:3000/static',
     //templates: 'http://www.theinformer.dev:3000/static',
+    //templates: '../templates',
     text: 'text'
     },
     config: {

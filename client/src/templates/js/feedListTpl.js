@@ -1,6 +1,6 @@
 <ul>
 <% _.each(feeds, function(feed){ %>
-        <li class="panel">
+        <li>
             <!-- Feed title -->
             <%= feed.get('title') %>
                <span class="pull-right">

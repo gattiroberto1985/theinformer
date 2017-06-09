@@ -41,3 +41,18 @@ BACKBONE
           segna come letto, rimuovi, apri in finestra, ... ? )
         - ArticlesView con lista elenco di ArticleView
         - ArticleContentView come da titolo
+
+LISTA FILES:
+
+entry point applicazione --> main.js (puntato nel data-main sull'include del require.js)
+    |--> importa app.js
+
+app.js --> inizializzazione Router backbone
+
+
+
+
+*******************************************************************************
+
+GULP:
+        https://julienrenaux.fr/2014/05/25/introduction-to-gulp-js-with-practical-examples/

@@ -7,7 +7,7 @@ FROM golang:1.8
 # Working on /go/ directory, adding sources
 ADD src/ src
 # Adding client files . . .
-#ADD ../client/publish/ client/publish
+ADD ../client/publish/ /go/bin/client/publish
 
 # INSTALLING GO DEPENDENCIES
 RUN go get github.com/julienschmidt/httprouter

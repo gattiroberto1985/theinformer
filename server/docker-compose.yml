@@ -1,0 +1,10 @@
+app-web:
+    build: ./
+    ports:
+        - "3000:3000"
+    links:
+        - app-db
+app-db:
+    build: ./db
+    expose:
+        - "42001"

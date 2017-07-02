@@ -49,7 +49,7 @@ func main() {
 
     // Get a UserController instance
     fc := controllers.NewFeedController   (getSession())
-	//ac := controllers.NewArticleController(getSession())
+	ac := controllers.NewArticleController(getSession())
 
 	rlog.Info("Defining http routing . . . ")
 	// FEED ENDPOINTS
@@ -69,6 +69,9 @@ func main() {
 	r.PATCH("/rest/feeds/", fc.UpdateFeeds)
 
 	r.GET("/rest/feeds/", fc.GetFeeds )
+
+	r.GET("/rest/feeds/:fId/articles/"    , ac.GetArticlesHeaders )
+	r.GET("/rest/articles/:aId", ac.GetArticle )
 
 	rlog.Info("Serving files . . .")
 	proxyUrl, err := url.Parse("http://192.168.100.15:3128")

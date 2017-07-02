@@ -1,9 +1,10 @@
-// Filename: models/feeds/feedModel
+// Model backbone per un feed
 define([
     'underscore',
     'backbone',
-    'config'
-], function(_, Backbone, config){
+    'config',
+    'collections/ArticlesCollection'
+], function(_, Backbone, config, ArticleCollection){
 
     // Defining backbone model. The save operation could be exectuted via:
     //book.save({}, {
@@ -15,27 +16,37 @@ define([
     //    }
     //});
     var FeedModel = Backbone.Model.extend({
+
+        // Valori di default
         defaults: {
             id         : "no_id",
             title      : "Nome feed",
-            //unread     : 0,
+            unread     : 0,
             url        : "<no_url>",
             lastUpdate : new Date(),
             categories : [ "no", "default", "categories" ]
         },
-        urlRoot    : config.serverRootUrl + "feeds",
+
+        //urlRoot    : config.serverRootUrl + "feeds",
         idAttribute: "id",
+
         initialize : function ( ) {
-            console.log("Initializing model for feed object . . . ");
+            console.log(" [ FeedModel ] Initializing model for feed . . . ");
         }, // closing initialize function
-        /*constructor: function( attributes, options ) {
-            console.log("FeedModel constructor with attributes: '" + JSON.stringify( attributes ) +
-                        "' and options '" + JSON.stringify( options ) + "' . . . ");
-            Backbone.Model.apply(this, arguments);
-        }*/
+
         validate   : function ( attr ) {
-            console.log("Validating model of feed '" + JSON.stringify( attr )  + "' . . .");
-        }
+            console.log(" [ FeedModel ] Validating model of feed '" + JSON.stringify( attr )  + "' . . .");
+        },
+
+        /*fetchArticles: function ( ) {
+            console.log( " [ FeedModel ] Fetching articles of feed '" + this.model.get("title") + "' . . . ");
+            var articleCollection = new ArticleCollection();
+            articleCollection.fetch( {
+                success: function(collection, response, options) { onFeedCollectionLoaded( collection, response, options, { "view": feedsView } ); },
+                error  : function(collection, response, options) { onError( collection, response, options); }
+            });
+        }*/
+
     });
 
     // Return the model for the module

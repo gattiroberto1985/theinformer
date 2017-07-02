@@ -32,7 +32,7 @@ type ResponseMessage struct {
 }
 
 type ArticleHeader struct {
-	Id    bson.ObjectId `json:"id"    bson:"id"`
+	Id    bson.ObjectId `json:"id"    bson:"_id"`
 	Title string        `json:"title" bson:"title"`
 	Date  time.Time     `json:"date"  bson:"date"`
 }

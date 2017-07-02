@@ -6,6 +6,8 @@ define([
 ], function(_, Backbone, config){
 
     var ArticleModel = Backbone.Model.extend({
+
+        // Valori di default
         defaults: {
             id         : "noid",
             feedId     : "nofeedid",
@@ -19,13 +21,16 @@ define([
             content    : "no_content",
             notes      : [ ]
         },
-        urlRoot    : config.serverRootUrl + "articles",
+        //urlRoot    : config.serverRootUrl + "articles",
         idAttribute: "id",
-        initialize : function ( ) {
-            console.log("Initializing model for article object . . . ");
+        urlRoot    : config.serverRootUrl + "articles",
+
+        initialize : function ( options ) {
+            console.log(" [ ArticleModel ] Initializing model for article . . . ");
         },
+
         validate   : function ( attr ) {
-            console.log("Validating model of feed '" + JSON.stringify( attr )  + "' . . .");
+            console.log(" [ ArticleModel ] Validating model of feed '" + JSON.stringify( attr )  + "' . . .");
         }
   });
 

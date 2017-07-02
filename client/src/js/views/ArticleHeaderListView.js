@@ -1,0 +1,45 @@
+// Filename: views/article/articleListView
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'models/Article',
+  'collections/ArticlesCollection',
+  'views/ArticleHeaderView',
+  'text!templates/articles/articleListTpl.html'
+], function($, _, Backbone, Article, ArticlesCollection, ArticleHeaderView, articleListTemplate){
+
+    var ArticleListView = Backbone.View.extend({
+        tagName: "ul",
+
+        initialize: function( options ){
+            console.log(" [ ArticleListView ] Initializing article collection view . . .");
+            //this.bus = options.bus;
+            //this.model.on("add"   , this.addArticle, this);
+            this.model.on("remove", this.delArticle, this);
+
+            /*this.collection = new ArticlesCollection();
+            _.bindAll(this, 'render');
+            this.collection.fetch({reset: true, success: this.render  }, this);*/
+        },
+
+        delArticle: function ( article ) {
+            console.log(" [ ArticleListView ] Deleting article . . .");
+        },
+
+        render: function(){
+            console.log(" [ ArticleListView ] Rendering article list . . .");
+            var self = this;
+
+            this.model.each(
+                function ( article ) {
+                    var articleHeaderView = new ArticleHeaderView({ model: article } );
+                    self.$el.append( articleHeaderView.render().$el );
+            }); // closing each
+            return this;
+        }
+
+    });
+    // Returning instantiated views can be quite useful for having "state"
+    return ArticleListView;
+});

@@ -3,11 +3,17 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/titleView',
-  'views/feeds/feedListView',
-  'views/articles/articleHeaderListView',
-  'views/articles/articleContentView'
-], function($, _, Backbone, TitleView, FeedListView, ArticleHeaderListView, ArticleContentView){
+  'config',
+  'views/TitleView'                 , // view per il titolo di pagina
+  'views/FeedView'                  , // view per il singolo feed nella lista feed
+  'views/FeedListView'              , // view per la collection di feed
+  'views/ArticleHeaderView'         , // view per il singolo articolo nella lista articoli
+  'views/ArticleHeaderListView'     , // view per la collection di articoli
+  'views/ArticleContentView'        , // view per il contenuto dell'articolo
+  'collections/FeedsCollection'     , // model per la collection di feed
+  'collections/ArticlesCollection'  , // model per la collection di articoli
+  'models/Article'
+], function($, _, Backbone, config, TitleView, FeedView, FeedListView, ArticleHeaderView, ArticleHeaderListView, ArticleContentView, FeedsCollection, ArticlesCollection, ArticleModel ){
     var paramsToObject = function(params) {
         if (!params)
             return {};
@@ -25,42 +31,57 @@ define([
     var AppRouter = Backbone.Router.extend({
         routes: {
             // Define some URL routes
-            '/'           : '',
-            'alert'       : 'alert',
-            'show/*params': 'show',
-            'admin'       : 'admin'
+            ''                        : "showHome",
+            //'feeds/:fId'              : "showArticlesInFeed",
+            'feeds/:fId/articles'     : "showArticlesInFeed",
+            "feeds/:fId/articles/:aId": "showArticleContent",
+
+            //"*other"                   : "showErrorPage"
         },
-        show: function ( params ) {
-            var objParam = paramsToObject(params);
-            console.log ( JSON.stringify ( objParam ) ) ;
+
+        showHome: function ( ) {
+            console.log(" [ router ] Going to home page . . .");
         },
-        alert: function ( ) { console.log( "Hello!"); }
+
+        showArticlesInFeed: function ( feedId ) {
+            console.log(" [ router ] Going to load articles of feed with id '" + feedId + "'. . ." );
+            var feed = FeedsCollection.get( feedId );
+            //console.log( " [ router ] Fetching articles of feed '" + this.model.get("title") + "' . . . ");
+            var articlesCollection = new ArticlesCollection([], { "feedId": feedId } );
+            articlesCollection.fetch( {
+                success: function(collection, response, options) {
+                    var articlesHeaderView = new ArticleHeaderListView( { model: articlesCollection }); // lista testata articoli
+                    console.log( " [ router ] Feed article collection loaded, rendering the view . . .");
+                    $("#articles").html( articlesHeaderView.render().$el ); // called asychronously
+                },
+                error  : function(collection, response, options) {
+                    console.log(" [ router ] ERROR: on loading articles!");
+                }
+            });
+        },
+
+        showArticleContent: function ( feedId, articleId ) {
+            console.log(" [ router ] Going to show article content . . . ");
+            var article = new ArticleModel( { id: articleId } );
+            //article.set("id", articleId);
+            article.fetch( {
+                success: function(model, response, options) {
+                    var articleContentView = new ArticleContentView({ model: new ArticleModel( response.body[0] ) } );
+                    $("#article-content").html( articleContentView.render().$el );
+                },
+                error  : function() {
+                    console.log(" [ router ] ERROR on fetching article!");
+                }
+            });
+        },
+
+        showErrorPage: function ( params ) {
+            console.log(" [ router ] Going to show error page . . ");
+        },
+
+        alert: function ( ) { console.log( "Hello!" ); }
     });
 
-
-  var initialize = function(){
-        console.log("Initializing router . . . ");
-        var app_router = new AppRouter();
-        console.log("Creating views . . . ");
-        var feedListView          = new FeedListView();
-        var articleHeaderListView = new ArticleHeaderListView( [], { feedId: "" });
-        var titleView             = new TitleView();
-        var articleContentView    = new ArticleContentView( [],  { articleId: "" });
-        app_router.on('load', function(){
-            // Call render on the module we loaded in via the dependency array
-            // 'views/projects/list'
-        });
-
-        app_router.on('defaultAction', function(actions){
-            // We have no matching route, lets just log what the URL was
-            console.log('No route:', actions);
-        });
-
-        Backbone.history.start();
-  };
-
-  return {
-    initialize: initialize
-  };
+    return AppRouter;
 
 });

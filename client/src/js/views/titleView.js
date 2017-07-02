@@ -3,18 +3,22 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!templates/titleTpl.html' ], function($, _, Backbone, titleTemplate)
-    {
+    //'text!templates/titleTpl.html'
+    'templates/js/titleTpl'
+], function($, _, Backbone, titleTemplate){
+
     var TitleView = Backbone.View.extend({
-        el        : $("#header"),
-        initialize: function( ) { this.render(); },
+
+        initialize: function( options ) {
+             //this.render();
+         },
+
         render    : function ( ) {
-            console.log( " Rendering title view . . .");
-            this.title = {
-                title   : "The Informer",
-                subtitle: "An RSS reader based on Go - MongoDB - BackboneJS - Bootstrap!"
-            };
-            this.$el.html( _.template( titleTemplate ) ( { title: this.title } ));
+            console.log( " [ TitleView ] Rendering title view . . .");
+            var template = _.template( titleTemplate.templateStr );
+            var html = template(this.model.toJSON());
+            this.$el.html( html );
+            return this;
         }
     });
 

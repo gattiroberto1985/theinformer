@@ -2,13 +2,33 @@
 define([], function(){
 
     return {
-        templateStr: '<div id="article-container">' +
+        /*
+        Id          bson.ObjectId `json:"id,omitempty"
+        FeedId      bson.ObjectId `json:"feedId"
+        Title       string        `json:"title"
+        Link        string        `json:"url"
+        PublishDate time.Time     `json:"publishDate"
+        Author      string        `json:"author"
+        IsRead      bool          `json:"isRead"
+        Description template.HTML `json:"description"
+        Rate        float32       `json:"rate"
+        Content     string        `json:"content"
+        Notes       []Note        `json:"notes"
+        */
+        templateStr: //'<div id="article-container">' +
         '    <h1> ' +
-        '        <a href="<%=article.get('url')%>"><%= article.get('title') %></a> ' +
+        '        <a href="<%= url %>"><%= title %></a> ' +
         '    </h1> ' +
-        '    <div id="article-body-container"> ' +
-        '        <%= article.get('content') %> ' +
-        '    </div> ' +
-        '</div> ';
+        '    <p class="author"> Autore: <%= author %></p> ' +
+        '    <p class="article-rate">Rating: <%= rate %> </p> ' +
+        '    <p class="article-publish-date"> Data pubblicazione: <%= publishDate %> </p>' +
+        '    <ul class="notes">' +
+        // for note in notes <li class="note"><textarea><%= note %></textarea></li>
+        '    </ul>' + 
+        '    <blockquote> <%= description %> </blockquote> ' +
+        '    <section id="article-body-container"> ' +
+        '        <%= content %> ' +
+        '    </section> '
+        //'</div> '
     }
 });

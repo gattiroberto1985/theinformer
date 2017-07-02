@@ -2,6 +2,7 @@
 define([], function( ){
 
     return {
-        serverRootUrl: 'http://localhost:3000/rest/'
+        serverRootUrl: 'http://localhost:3000/rest/',
+        router       : { }
     };
 });

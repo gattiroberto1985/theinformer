@@ -1,22 +1,19 @@
-// Filename: main.js
-
-// Require.js allows us to configure shortcut alias
-// There usage will become more apparent further along in the tutorial.
+// Bootstrap file for the application
 require.config({
     shim: {
         'bootstrap': { "deps": [ 'jquery' ] }
     },
-  paths: {
-    jquery    : 'libs/jquery-3.2.1',
-    underscore: 'libs/underscore-1.8.3',
-    backbone  : 'libs/backbone-1.3.3',
-    //tether    : 'libs/tether-1.4.0',
-    bootstrap : 'libs/bootstrap-3.3.7',
-    config    : 'config',
-    templates: 'http://localhost:3000/static',
-    //templates: 'http://www.theinformer.dev:3000/static',
-    //templates: '../templates',
-    text: 'text'
+    paths: {
+        jquery    : 'libs/jquery-3.2.1',
+        underscore: 'libs/underscore-1.8.3', // be sure to download the amd version of the library!
+        backbone  : 'libs/backbone-1.3.3'  , // be sure to download the amd version of the library!
+        //tether    : 'libs/tether-1.4.0',
+        bootstrap : 'libs/bootstrap-3.3.7',
+        config    : 'config',
+        //templates : 'http://localhost:3000/static',
+        //templates: 'http://www.theinformer.dev:3000/static',
+        templates: '../templates',
+        text      : 'text'
     },
     config: {
         text: {
@@ -38,11 +35,8 @@ require.config({
 
 });
 
-require([
-  // Load our app module and pass it to our definition function
-  'app',
-], function(App){
+require( ['app'], function( App ) {
     console.log("initializing app . . .")
-  // The "app" dependency is passed in as "App"
-  App.initialize();
+    // The "app" dependency is passed in as "App"
+    App.initialize();
 });

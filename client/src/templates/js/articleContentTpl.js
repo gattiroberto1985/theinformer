@@ -17,14 +17,14 @@ define([], function(){
         */
         templateStr: //'<div id="article-container">' +
         '    <h1> ' +
-        '        <a href="<%= url %>"><%= title %></a> ' +
+        '        <a href="<%= link %>"><%= title %></a> ' +
         '    </h1> ' +
         '    <p class="author"> Autore: <%= author %></p> ' +
         '    <p class="article-rate">Rating: <%= rate %> </p> ' +
         '    <p class="article-publish-date"> Data pubblicazione: <%= publishDate %> </p>' +
         '    <ul class="notes">' +
         // for note in notes <li class="note"><textarea><%= note %></textarea></li>
-        '    </ul>' + 
+        '    </ul>' +
         '    <blockquote> <%= description %> </blockquote> ' +
         '    <section id="article-body-container"> ' +
         '        <%= content %> ' +

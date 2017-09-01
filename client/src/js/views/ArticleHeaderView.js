@@ -13,6 +13,7 @@ define([
     var ArticleHeaderView = Backbone.View.extend({
         // Nessuna specifica dell'elementid: verrà valorizzato a runtime!
         tagName: "li",
+        //tagName: "tr",
 
         events: {
             "click #del-article" : "doDeleteArticle",

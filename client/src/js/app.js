@@ -63,8 +63,8 @@ define([
         console.log(" [ App ] Creating interface . . .");
         $("#header")         .html( titleView         .render().$el );
         //$("#feeds")          .html( feedsView         .render().$el ); // called asychronously
-        $("#articles")       .html( articlesHeaderView.render().$el );   // Empty initialization
-        $("#article-content").html( articleContentView.render().$el );   // Empty initialization
+        //$("#articles")       .html( articlesHeaderView.render().$el );   // Empty initialization
+        //$("#article-content").html( articleContentView.render().$el );   // Empty initialization
     }
 
     return {

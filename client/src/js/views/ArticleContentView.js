@@ -16,11 +16,14 @@ define([
         initialize: function( /*options*/ ) { },
 
         render    : function( ) {
-            console.log(" [ ArticleContentView ] Rendering article content . . .");
-            var template = _.template( articleContentTemplate.templateStr );
-            var html = template(this.model.toJSON());
-            this.$el.html( html );
-            return this;
+            if ( this.model != undefined )
+            {
+                console.log(" [ ArticleContentView ] Rendering article content . . .");
+                var template = _.template( articleContentTemplate.templateStr );
+                var html = template(this.model.toJSON());
+                this.$el.html( html );
+            }
+            return this;            
         }
     });
 

@@ -15,6 +15,15 @@
             <header id="header"></header>
 
             <nav id="sidebar" >
+                <!--
+                 This is the controller view for the app, which gives abilities
+                 to:
+                    . Add a feed, manual or automatic
+                    . Refresh the existent feeds
+                    . Add an article to the manual feeds
+                 -->
+                <div id="app-manager" backbone-view="views/ManagerView" backbone-template="templates/appManagerTpl.js">
+                </div>
                 <div id="feedlist">
                     <ul id="feeds"></ul>
                 </div>
@@ -23,7 +32,13 @@
             <div id="body-container">
 
                 <div id="articlelist">
-                    <ul id="articles"></ul>
+                    <!--table id="articles" class="table table-striped">
+                        <tr><th class="col-md-2">Autore</th><th class="col-md-2">Data pubbl.</th><th class="col-md-4">Titolo</th><th class="col-md-1">Punteggio</th><th class="col-md-1">Tags</th></tr>
+                        <tbody>
+
+                        </tbody>
+                    </table-->
+                    <!--ul id="articles"></ul-->
                 </div>
 
                 <div id="content">

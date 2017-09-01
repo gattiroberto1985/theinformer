@@ -19,7 +19,8 @@ define([
             description: "no_description",
             rate       : 0,
             content    : "no_content",
-            notes      : [ ]
+            notes      : [ ],
+            tags       : [ ]
         },
         //urlRoot    : config.serverRootUrl + "articles",
         idAttribute: "id",

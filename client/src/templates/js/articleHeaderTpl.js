@@ -1,5 +1,4 @@
 define([], function(){
-
     return {
 
         templateStr:    "<% if ( isRead ) { %> " +
@@ -9,5 +8,13 @@ define([], function(){
                         "<% }%>" +
                             "<%= title %>"  +
                         "</li>"
+        // Autore -- Data pubbl. -- Titolo -- Punteggio -- Tags
+        /*templateStr:    "<tr>" +
+                        "<td> <%= author %> </td>" +
+                        "<td> <%= publishDate %></td>" +
+                        "<td> <%= title %></td>" +
+                        "<td> <%= rate %></td>" +
+                        "<td> <%= tags %></td>" +
+                        "</tr>"*/
     }
 });

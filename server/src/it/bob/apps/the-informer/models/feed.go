@@ -85,7 +85,7 @@ func ( rssFeed RssFeed ) UpdateFeed(session *mgo.Session) ( *FeedHeader, error )
 }
 
 // SaveFeed insert the feed into the database and proceed to his update
-func ( rssFeed RssFeed ) SaveFeed(session *mgo.Session) ( *FeedHeader, error ) {
+func ( rssFeed RssFeed ) UpsertFeed(session *mgo.Session) ( *FeedHeader, error ) {
     rlog.Info("Saving changes to feed '" + rssFeed.Title + ". . . ")
     err := session.DB("theinformer").C("feeds").Insert( rssFeed )
     if ( err != nil ) {
@@ -99,7 +99,7 @@ func ( rssFeed RssFeed ) SaveFeed(session *mgo.Session) ( *FeedHeader, error ) {
 
 func ( rssFeed RssFeed ) DeleteFeed( session *mgo.Session ) error {
     rlog.Info("Deleting feed '" + rssFeed.Title + "' (id: '" + rssFeed.Id.String() + "')")
-    err := session.DB("theinformer").C("feeds").Remove( rssFeed )
+    err := session.DB("theinformer").C("feeds").Remove(bson.M{ "_id": rssFeed.Id } )
     if ( err != nil ) {
         // Manage error!
         rlog.Error("An error has occurred while deleting the feed", err )

@@ -3,8 +3,9 @@ define([
     'underscore',
     'backbone',
     'config',
-    'collections/ArticlesCollection'
-], function(_, Backbone, config, ArticleCollection){
+    'collections/ArticlesCollection',
+    'models/Article'
+], function(_, Backbone, config, ArticlesCollection, ArticleModel ){
 
     // Defining backbone model. The save operation could be exectuted via:
     //book.save({}, {
@@ -19,12 +20,13 @@ define([
 
         // Valori di default
         defaults: {
-            id         : "no_id",
+            //id         : "no_id",
             title      : "Nome feed",
             unread     : 0,
             url        : "<no_url>",
             lastUpdate : new Date(),
-            categories : [ "no", "default", "categories" ]
+            categories : [ "no", "default", "categories" ],
+            //isNew      : true                                 // Backbone default property
         },
 
         //urlRoot    : config.serverRootUrl + "feeds",
@@ -38,14 +40,20 @@ define([
             console.log(" [ FeedModel ] Validating model of feed '" + JSON.stringify( attr )  + "' . . .");
         },
 
-        /*fetchArticles: function ( ) {
-            console.log( " [ FeedModel ] Fetching articles of feed '" + this.model.get("title") + "' . . . ");
-            var articleCollection = new ArticleCollection();
-            articleCollection.fetch( {
-                success: function(collection, response, options) { onFeedCollectionLoaded( collection, response, options, { "view": feedsView } ); },
-                error  : function(collection, response, options) { onError( collection, response, options); }
+        /**
+         * Refresh feed method.
+         */
+         refresh: function ( ) {
+            console.log( " [ FeedModel ] Fetching articles of feed '" + this.get("title") + "' . . . ");
+            var articleCollection = new ArticlesCollection([], { feedId: this.get("id") } );
+            //var articlesHeaderView = new ArticleHeaderListView( { model: articlesCollection }); // lista testata articoli
+            //var articleContentView = new ArticleContentView( { model: article });               // contenuto articolo
+            articleCollection.sync('patch', articleCollection, {
+            //articleCollection.save( {
+                success: function(collection, response, options) {  console.log( " [ FeedModel ] Feed updated! "); },
+                error  : function(collection, response, options) { console.log( " [ FeedModel ] ERROR: on feed updating . . . :'(  ... )"); }
             });
-        }*/
+        }
 
     });
 

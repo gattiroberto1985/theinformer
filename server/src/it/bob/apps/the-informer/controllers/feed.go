@@ -9,6 +9,7 @@ import (
 //	"io/ioutil"
     "net/http"
     //"strings"
+    "time"
 
     // External additional libraries
     "gopkg.in/mgo.v2"
@@ -76,6 +77,16 @@ func (fc FeedController) UpdateFeeds(response http.ResponseWriter, request *http
     response.Header().Set("Content-Type", "application/json")
     response.WriteHeader(200)
     fmt.Fprintf(response, "%s", responseMessage)
+}
+
+func (fc FeedController) UpsertFeed(response http.ResponseWriter, request *http.Request, params httprouter.Params) {
+    var logprefix string = " [ POST /rest/feeds ] "
+    var feed models.RssFeed
+    json.NewDecoder(request.Body).Decode(&feed)
+    feed.Id = bson.NewObjectId()
+    feed.LastUpd = time.Date(1970, 01, 01, 00, 00, 00, 00, time.UTC)
+    rlog.Info(logprefix + "Upserting feed [ " + feed.Title + " ]. . . ")
+    feed.UpsertFeed(fc.session)
 }
 
 func (fc FeedController) DeleteFeed(response http.ResponseWriter, request *http.Request, params httprouter.Params) {

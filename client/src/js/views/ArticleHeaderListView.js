@@ -5,9 +5,9 @@ define([
   'backbone',
   'models/Article',
   'collections/ArticlesCollection',
-  'views/ArticleHeaderView',
-  'text!templates/articles/articleListTpl.html'
-], function($, _, Backbone, Article, ArticlesCollection, ArticleHeaderView, articleListTemplate){
+  'views/ArticleHeaderView'
+//  'text!templates/articles/articleListTpl.html'
+], function($, _, Backbone, Article, ArticlesCollection, ArticleHeaderView/*, articleListTemplate*/ ){
 
     var ArticleListView = Backbone.View.extend({
         tagName: "ul",
@@ -37,11 +37,11 @@ define([
                 function ( article ) {
                     var articleHeaderView = new ArticleHeaderView({ model: article } );
                     var el2Add = articleHeaderView.render().$el;
-                    console.log( " [ ArticleHeaderListView ] --> Adding new ArticleHeaderView to $el: '" );
-                    console.log( el2Add.html() );
+                    //console.log( " [ ArticleHeaderListView ] --> Adding new ArticleHeaderView to $el: '" );
+                    //console.log( el2Add.html() );
 
                     self.$el.append( el2Add );
-                    console.log(" [ArticleHeaderListView ] --> ul length: " + self.$el.children().length );
+                    //console.log(" [ ArticleHeaderListView ] --> ul length: " + self.$el.children().length );
             }); // closing each
             $("#articlelist").html( this.$el );
             return this;

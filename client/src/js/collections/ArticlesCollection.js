@@ -10,14 +10,21 @@ define([
     var ArticlesCollection = Backbone.Collection.extend({
 
         model     : ArticleModel,
-        url       : config.serverRootUrl + "feeds/:feedId:/articles",
+        //url       : config.serverRootUrl + "feeds/:feedId:/articles",
+        feedId    : "<na>",
+
+        url       : function ( ) {
+            return config.serverRootUrl + "feeds/" + this.feedId + "/articles";
+        },
 
         initialize: function ( models, options ) {
+            console.log( " [ ArticlesCollection ] Entering initialize method . . .");
             if ( options != undefined )
             {
-                feedId = options.feedId;
-                console.log( " [ ArticlesCollection ] Overriding url for collection, with feedId '" + feedId + "'")
-                this.url = config.serverRootUrl + "feeds/" + feedId + "/articles";
+                this.feedId = options.feedId;
+                //console.log( " [ ArticlesCollection ] Overriding url for collection, with feedId '" + feedId + "'")
+                //this.url = config.serverRootUrl + "feeds/" + feedId + "/articles";
+                //console.log( " [ ArticlesCollection ] Url is '" + this.url + "'")
             }
         },
 

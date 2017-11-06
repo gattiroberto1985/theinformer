@@ -1,4 +1,11 @@
-// Filename: router.js
+/**
+ * File       : router.js
+ * Descrizione:
+ *       File di definizione del routing backbone.
+ * Versione   : 1.0
+ * Changelog  :
+ *      2017.11.05 -- refactoring
+ */
 define([
   'jquery',
   'underscore',
@@ -13,7 +20,15 @@ define([
   'collections/FeedsCollection'     , // model per la collection di feed
   'collections/ArticlesCollection'  , // model per la collection di articoli
   'models/Article'
-], function($, _, Backbone, config, TitleView, FeedView, FeedListView, ArticleHeaderView, ArticleHeaderListView, ArticleContentView, FeedsCollection, ArticlesCollection, ArticleModel ){
+], function($, _, Backbone, config, TitleView, FeedView,
+            FeedListView, ArticleHeaderView, ArticleHeaderListView,
+            ArticleContentView, FeedsCollection, ArticlesCollection,
+            ArticleModel ){
+
+    /**
+     * Method to transform a parameters string into a json object.
+     * From: <generic stackoverflow :) >
+     */
     var paramsToObject = function(params) {
         if (!params)
             return {};
@@ -28,7 +43,14 @@ define([
         return obj;
     };
 
+    /**
+     * Backbone router definition.
+     */
     var AppRouter = Backbone.Router.extend({
+
+        /**
+         * Router path definitions
+         */
         routes: {
             // Define some URL routes
             ''                        : "showHome",
@@ -39,10 +61,16 @@ define([
             //"*other"                   : "showErrorPage"
         },
 
+        /**
+         * Callback for the showHome route
+         */
         showHome: function ( ) {
             console.log(" [ router ] Going to home page . . .");
         },
 
+        /**
+         * Callback for the article showing route
+         */
         showArticlesInFeed: function ( feedId ) {
             console.log(" [ router ] Going to load articles of feed with id '" + feedId + "'. . ." );
             var feed = FeedsCollection.get( feedId );
@@ -60,6 +88,9 @@ define([
             });
         },
 
+        /**
+         * Callback for the article content showing route
+         */
         showArticleContent: function ( feedId, articleId ) {
             console.log(" [ router ] Going to show article content . . . ");
             var article = new ArticleModel( { id: articleId } );
@@ -75,10 +106,16 @@ define([
             });
         },
 
+        /**
+         * Callback for the generic error route
+         */
         showErrorPage: function ( params ) {
             console.log(" [ router ] Going to show error page . . ");
         },
 
+        /**
+         * Callback for the test endpoint
+         */
         alert: function ( ) { console.log( "Hello!" ); }
     });
 

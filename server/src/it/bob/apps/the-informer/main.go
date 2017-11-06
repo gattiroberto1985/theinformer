@@ -60,11 +60,11 @@ func main() {
 	// Specific feed getter
 	//r.GET(  "/rest/feeds/:fId"       , fc.GetFeed    )
 
-	//r.POST("/rest/feeds/"           , fc.InsertFeed )
+	r.POST("/rest/feeds/"           , fc.UpsertFeed )
 	//r.PUT ("/rest/feeds/:fId"       , fc.ModifyFeed )
 	r.DELETE("/rest/feeds/:fId"     , fc.DeleteFeed )
 	// Update specific feeds article
-	r.PATCH("/rest/feeds/:fId"     , fc.UpdateFeeds)
+	r.PATCH("/rest/feeds/:fId/articles"     , fc.UpdateFeeds)
 	// Update all feeds article
 	r.PATCH("/rest/feeds/", fc.UpdateFeeds)
 

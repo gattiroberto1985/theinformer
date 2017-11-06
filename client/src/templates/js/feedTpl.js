@@ -2,15 +2,15 @@
 define([], function(){
 
     return {
-        templateStr:    "<li>" +
+        templateStr:    "<div>" +
                             "<%= title %>" +
                             "<span class='pull-right'>" +
                                 "<span class='badge'>" +
-                                    "5 <!-- <%= unread %> -->" +
-                                    "<button class='glyphicons glyphicons-refresh' />" +
-                                    "<button class='glyphicons glyphicons-delete' />" +
-                                "</span>" +
+                                    "<%= unread %>" +
+                                "</span> " +
+                                "<button id='feed-refresh' class='glyphicon glyphicon-refresh' />" +
+                                "<button id='feed-delete'  class='glyphicon glyphicon-trash' />" +
                             "</span>" +
-                        "</li>"
+                        "</div>"
     }
 });

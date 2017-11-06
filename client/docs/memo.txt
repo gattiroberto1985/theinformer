@@ -3,6 +3,8 @@ vista "standard" a tre livelli:
 -------------------------------------------------------
      header con titolo app (piccolo)
 -------------------------------------------------------
+   manager  |
+------------|
             |
  listafeeds |       lista articoli
             |
@@ -34,13 +36,41 @@ Inizia senza storyboard e con vista unica (/home)!
 BACKBONE
 
    --> views:
-        - FeedView (con visualizzazione titolo feed e tasti di controllo per
-          rimozione, refresh articoli e spostamento)
-        - FeedsView con lista gerarchica di FeedView
-        - ArticleView con visualizzazione titolo, data, autore e tasti di controllo (
-          segna come letto, rimuovi, apri in finestra, ... ? )
-        - ArticlesView con lista elenco di ArticleView
-        - ArticleContentView come da titolo
+
+        - ManagerView:
+            - controllo di aggiunta feed (casella testo + tasto add)
+            - controllo di refresh feed
+
+        - FeedView:
+            vista di un singolo feed, costruita con:
+                 ________________________________________________
+                |                                                |
+                |   Titolo feed           #unread refresh delete |
+                |________________________________________________|
+
+        - FeedsView:
+            listview di feed;
+
+        - ArticleHeaderView:
+            vista con header degli articoli costruita con:
+                 _________________________________________
+                | <mark>| <art_title>         <categories>|
+                |_________________________________________|
+
+        - ArticleHeadersView:
+            listview di header degli articoli;
+
+        - ArticleContentView:
+            corpo dell'articolo, costruita con:
+             _________________________________________
+            | <art_title>                             |
+            |-----------------------------------------|
+            |<categories>                             | <-- textbox in hover
+            |<mark> <save>                            |
+            |-----------------------------------------|
+            |      art_body                           |
+            |_________________________________________|
+
 
 LISTA FILES:
 
